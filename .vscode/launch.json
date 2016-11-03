@@ -1,0 +1,21 @@
+{
+    "version": "1.0.0",
+    "configurations": [
+        {
+    "name": "Python",
+    "type": "python",
+    "pythonPath":"${config.python.pythonPath}", 
+    "request": "launch",
+    "console": "none",
+    "program": "${file}",
+    "cwd": "${workspaceRoot}",
+    "debugOptions": [
+        "WaitOnAbnormalExit",
+        "WaitOnNormalExit",
+        "RedirectOutput"
+    ],
+    "env": {"name":"value"}
+        }
+    ]
+
+}
