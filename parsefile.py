@@ -1,4 +1,11 @@
 import sys
+import json
+
+def getConfigs():
+    with open('parse.json') as configs:
+        data = json.load(configs)
+        
+    return data
 
 def controllerToFile(controller):
     controllerMap = {
@@ -23,8 +30,8 @@ def jsfileMap(module):
     return fileMap.get(module,'invalid')
 
 
-def parseJSFile(module):
-    filename = 'C:\\Projects\\Film\\EventBuilder\\Dev\\EventBuilder\\Scripts\\eventbuilder\\'
+def parseJSFile(module, filename=""):
+    #filename = 'C:\\Projects\\Film\\EventBuilder\\Dev\\EventBuilder\\Scripts\\eventbuilder\\'
     jsfile = jsfileMap(module)
     filename = filename + jsfile
     methods = []
@@ -45,8 +52,8 @@ def parseJSFile(module):
     return methods       
 
 
-def parseController(mod,jsRefMethods):
-    filename = 'C:\\Projects\\Film\\EventBuilder\\Dev\\EventBuilder\\Controllers\\'
+def parseController(mod,jsRefMethods,filename=""):
+    #filename = 'C:\\Projects\\Film\\EventBuilder\\Dev\\EventBuilder\\Controllers\\'
     controllerFile = controllerToFile(mod)
     filename = filename + controllerFile
     
@@ -72,6 +79,7 @@ def unreferencedMethods(jsRefMethods, actionMethods):
             actionMethods.remove(jmethod)
     #return the unreferenced methods
     #the referenced methods have been removed
+    actionMethods.sort()
     return actionMethods
 
 
@@ -81,10 +89,11 @@ def printItems(items):
 
 
 def main(module):
-    jmethods = parseJSFile(module)
+    config = getConfigs();
+    jmethods = parseJSFile(module,config["js-path"])
     #print('JavaScript Methods')
     #printItems(jmethods)
-    actionMethods = parseController(module,jmethods)
+    actionMethods = parseController(module,jmethods,config["cs-path"])
     #print('Action Methods')
     #printItems(actionMethods)
     unrefMethods = unreferencedMethods(jmethods,actionMethods)
@@ -92,9 +101,13 @@ def main(module):
     printItems(unrefMethods)
 
 if __name__ == '__main__':
-    #file = "C:\Projects\Film\EventBuilder\Dev\EventBuilder\Scripts\eventbuilder\eventbuilder.venues.js"
-    module = sys.argv[1]
-    main(module)
-    #for n in parseFile(file):
-    #    print(n)
+    #file = r"C:\Projects\Film\EventBuilder\Dev\EventBuilder\Scripts\eventbuilder\eventbuilder.venues.js"
+    if len(sys.argv) < 2:
+        print("""\
+           Usage: python parsefile.py module_name
+                module_name    is associated with the JavaScript and Controller files.
+           """)
+    else:
+        module = sys.argv[1]
+        main(module)
 
