@@ -4,9 +4,8 @@ import json
 
 def getConfigs():
     with open('parse.json') as configs:
-        return = json.load(configs)
+        return json.load(configs)
         
-
 
 config = getConfigs()
 
@@ -14,6 +13,7 @@ def controllerToFile(controller):
     controllerMap = config['codeFileMap']
 
     return controllerMap.get(controller, 'invalid')
+
 
 def jsfileMap(module):
     fileMap = config['jsFileMap']
@@ -28,9 +28,9 @@ def parseJSFile(module, filename=""):
     methods = []
     file = open(filename, 'r')
     for line in file:
-        if line.find(config.js-url-prop-begin) >= 0:
+        if line.find(config['js-url-prop-begin']) >= 0:
             for l in file:
-                if l.find(config.js-url-prop-end) >= 0:
+                if l.find(config['js-url-prop-end']) >= 0:
                     break
                 else:
                     ritems = l.split('/')
@@ -43,15 +43,15 @@ def parseJSFile(module, filename=""):
     return methods       
 
 
-def parseController(mod,jsRefMethods,filename=""):
+def parseController(module,jsRefMethods,filename=""):
     #filename = 'C:\\Projects\\Film\\EventBuilder\\Dev\\EventBuilder\\Controllers\\'
-    controllerFile = controllerToFile(mod)
+    controllerFile = controllerToFile(module)
     filename = filename + controllerFile
     
     actionMethods = []
     file = open(filename,'r')
     for line in file:
-        if line.find('public ActionResult') > 0:
+        if line.find(config['cs-method-regex']) > 0:
             item = line.strip().split(' ')[2]
             method = item.split('(')[0]
             actionMethods.append(method)

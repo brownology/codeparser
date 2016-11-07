@@ -4,7 +4,7 @@
     "js-url-prop-begin":", urls: {",
     "js-url-prop-end":"}",
     "js-url-regex":"",
-    "cs-method-regex":"",
+    "cs-method-regex":"public ActionResult",
     "codeFileMap":  {
         "venues": "VenuesController.cs",
         "events": "EventsController.cs",
