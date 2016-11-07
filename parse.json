@@ -1,6 +1,22 @@
 {
     "js-path": "C:\\Projects\\Film\\EventBuilder\\Dev\\EventBuilder\\Scripts\\eventbuilder\\",
     "cs-path": "C:\\Projects\\Film\\EventBuilder\\Dev\\EventBuilder\\Controllers\\",
+    "js-url-prop-begin":", urls: {",
+    "js-url-prop-end":"}",
     "js-url-regex":"",
-    "cs-method-regex":""
+    "cs-method-regex":"",
+    "codeFileMap":  {
+        "venues": "VenuesController.cs",
+        "events": "EventsController.cs",
+        "contacts": "ContactsController.cs",
+        "seating": "SeatingController.cs",
+        "invitees": "InviteesController.cs"
+    },
+    "jsFileMap": {
+        "venues": "eventbuilder.venues.js",
+        "events": "eventbuilder.events.js",
+        "contacts": "eventbuilder.contacts.js",
+        "seating": "eventbuilder.seating.js",
+        "invitees": "eventbuilder.invitees.js"
+    }
 }

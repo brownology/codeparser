@@ -1,32 +1,23 @@
 import sys
 import json
 
+
 def getConfigs():
     with open('parse.json') as configs:
-        data = json.load(configs)
+        return = json.load(configs)
         
-    return data
+
+
+config = getConfigs()
 
 def controllerToFile(controller):
-    controllerMap = {
-        'venues': 'VenuesController.cs',
-        'events': 'EventsController.cs',
-        'contacts': 'ContactsController.cs',
-        'seating': 'SeatingController.cs',
-        'invitees': 'InviteesController.cs'
-    }
+    controllerMap = config['codeFileMap']
 
     return controllerMap.get(controller, 'invalid')
 
 def jsfileMap(module):
-    fileMap = {
-        'venues': 'eventbuilder.venues.js',
-        'events': 'eventbuilder.events.js',
-        'contacts': 'eventbuilder.contacts.js',
-        'seating': 'eventbuilder.seating.js',
-        'invitees': 'eventbuilder.invitees.js'
-    }
-
+    fileMap = config['jsFileMap']
+    
     return fileMap.get(module,'invalid')
 
 
@@ -37,9 +28,9 @@ def parseJSFile(module, filename=""):
     methods = []
     file = open(filename, 'r')
     for line in file:
-        if line.find(', urls: {') >= 0:
+        if line.find(config.js-url-prop-begin) >= 0:
             for l in file:
-                if l.find('}') >= 0:
+                if l.find(config.js-url-prop-end) >= 0:
                     break
                 else:
                     ritems = l.split('/')
@@ -89,7 +80,7 @@ def printItems(items):
 
 
 def main(module):
-    config = getConfigs();
+    #config = getConfigs()
     jmethods = parseJSFile(module,config["js-path"])
     #print('JavaScript Methods')
     #printItems(jmethods)
