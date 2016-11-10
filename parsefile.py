@@ -6,7 +6,9 @@ def getConfigs():
     with open('parse.json') as configs:
         return json.load(configs)
         
-
+#regex json properties should be an list of regexes
+#traverse the paths
+#
 config = getConfigs()
 
 def controllerToFile(controller):
