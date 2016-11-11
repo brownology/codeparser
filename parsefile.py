@@ -1,6 +1,6 @@
 import sys
 import json
-
+import re
 
 def getConfigs():
     with open('parse.json') as configs:
@@ -52,8 +52,12 @@ def parseController(module,jsRefMethods,filename=""):
     
     actionMethods = []
     file = open(filename,'r')
+    testMethod = re.compile(config['cs-method-regex'])
     for line in file:
-        if line.find(config['cs-method-regex']) > 0:
+        #Paridhi suggested a list of regexes to test, but that's not necessary
+        #regex uses the pipe | to separate multiple expressions to test
+        #if line.find(config['cs-method-regex']) > 0:
+        if testMethod.search(line):
             item = line.strip().split(' ')[2]
             method = item.split('(')[0]
             actionMethods.append(method)
@@ -95,12 +99,12 @@ def main(module):
 
 if __name__ == '__main__':
     #file = r"C:\Projects\Film\EventBuilder\Dev\EventBuilder\Scripts\eventbuilder\eventbuilder.venues.js"
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 1:
         print("""\
            Usage: python parsefile.py module_name
                 module_name    is associated with the JavaScript and Controller files.
            """)
     else:
-        module = sys.argv[1]
+        module = 'events' #sys.argv[1]
         main(module)
 
